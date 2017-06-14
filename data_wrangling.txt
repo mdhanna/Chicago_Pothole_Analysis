@@ -1,0 +1,26 @@
+The JSON file itself needed to be parsed before converting into a database.  The data was downloaded as two dictionaries 
+(combined into the JSON string): one as ‘data’, which contained the values for each row and one as ‘meta’, which included 
+information about the dataset itself such as the number of downloads as well as the column names.  I needed to break down 
+the meta dictionary and extract the column headings and compile these into a list.
+ 
+Then, I cleaned the ‘data’ dictionary by removing several initial columns on each row that referenced unnecessary internal ID’s.  
+I also removed the ‘LOCATION’ column at the end since this data only contained the longitude and latitude pairings, and the latitude 
+and longitude both already had their own columns.  Once the rows were cleaned, I was able to convert the data into a panda dataframe 
+and add column headings from the work on the ‘meta’ data.
+ 
+Once the data was imported into a panda dataframe, I first cleaned the Completion Date and Creation Date columns which were added as 
+strings.  I converted each date string to a timedate object (while leaving any None data entries alone) and placed these cleaned dates 
+into a new column in the dataframe.  I also calculated a ‘time_passed’ vector to test operations on the new data types, which passed.
+ 
+I then converted the ‘Number of Potholes Filled On Block’ column to an integer from strings using the panda feature ‘to_numeric’.  Any 
+None values were converted to blank spaces.  Latitude, longitude, and the x & y coordinates were converted to floats.
+ 
+In terms of outliers, some completion dates are much later than their creation dates.  The maximum time elapsed is 1194 days or about 
+3.27 years.  The next four largest values for time elapsed are 1009, 997, 720 and 688 days, and there are 4,795 rows that show a wait 
+time of more than a year so it seems unlikely that these are key errors during data entry  Therefore, as I have no reason to believe 
+that these data entries are incorrect (and knowing the pace at which the City of Chicago can work), I choose to keep them in the dataset.  
+ 
+Similarly, the maximum number of potholes filled on a block in the dataset is 320.  As the average block length (on the long side) in 
+the city is 660 ft, this works out to a pothole every two feet!  The next 30 largest values for number of potholes filled per block are 
+all 300, and the number of entries above 100 potholes is 2,161 so again it seems very unlikely that these are key errors.  Therefore, 
+these entries remain in the dataset. 
