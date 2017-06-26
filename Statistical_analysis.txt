@@ -33,14 +33,18 @@ requests are submitted for pothole repair per year.
 7. Average number of potholes found and response time by community area.  Negative linear relationship with r-value of -0.43 and p-value of 
 0.0001.  Oddly, the negative correlation suggests the DoT finds 0.14 fewer potholes for each day they delay responding to the request.
 
-
 Although the distribution of response time data is approximately exponential, the Central Limit Theorem states that the means will be normally
  distributed and thus we can use the t-test to test the difference in means between groups.  As the variances between each sample were not 
 equal, I performed a Welch's t-test using scipy.stat's ttest_ind method to find that the average wait time for northern community areas (36.4 
 days) is significantly longer than the average wait time for southern community areas (21.1 days) with a p-value of very close to zero.
 
-A Welch's t-test was performed on average wait times in the winter and summer and found a small p-value, validating the relationship that average wait times in the summer exceed average wait times in the winter.
+A Welch's t-test was performed on average wait times in the winter and summer and found a small p-value, validating the relationship that
+ average wait times in the summer exceed average wait times in the winter.
 
-I also used the Welch's t-test to determine if wait time for pothole repairs had a larger increase in northern community areas over southern ones from winter to summer.  I found this to be the case with a p-value of 0.00125, showing that the difference in means of a wait time increase of 33.5 days for northern areas is significantly larger than the wait time increase of 27.0 days for southern areas.
+I also used the Welch's t-test to determine if wait time for pothole repairs had a larger increase in northern community areas over southern 
+ones from winter to summer.  I found this to be the case with a p-value of 0.00125, showing that the difference in means of a wait time 
+increase of 33.5 days for northern areas is significantly larger than the wait time increase of 27.0 days for southern areas.
 
-The last Welch's t-test I performed was to determine if there was a statistically significant difference in the number of potholes found per block between southern and northern community areas.  With a very small p-value and a negative t-statistic, I was able to confirm that southern areas have a larger number of potholes found per block on average (13.1) than northern ones (9.1).
+The last Welch's t-test I performed was to determine if there was a statistically significant difference in the number of potholes found per 
+block between southern and northern community areas.  With a very small p-value and a negative t-statistic, I was able to confirm that 
+southern areas have a larger number of potholes found per block on average (13.1) than northern ones (9.1).
