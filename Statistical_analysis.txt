@@ -1,0 +1,23 @@
+To determine the statistical relevance of possible trends I observed in the data, I ran linear regressions using linregress in the scipy stats package.  I was then able to establish whether or not a relationship existed by comparing both the r-value for fit and the p-value for the null hypothesis of a zero slope.  For all relationships that appeared to have a correlation through a scatterplot and to which I applied linregress, a p-value below 0.05 was returned for the following, showing that we could reject the null hypothesis and that a linear relationship is a good fit for this data:
+
+1. Number of pothole repair requests by community area and the community area population.  This had a clear linear relationship with an r-value of 0.88 and a p-value of 4.69e-26.  Thus we can conclude that Chicago residents submit pothole repair requests at roughly the same rate (2.1 requests per 100 residents per year, based on the slope of the regression line) regardless of the community area in which they live.
+
+2. Number of pothole repair requests by community area and average number of potholes found per block.  Negative linear relationship with r-value of -0.33 and a p-value of 0.003.  Slope indicates that for every 1000 more requests for repair filed every year, 1.8 fewer potholes are found.
+
+3. Median income of community area and total pothole repair requests from 2011-2017.  Positive linear relationship with r-value of 0.33 and p-value of 0.0033.  Slope of regression line shows that about 9 more requests are submitted for pothole repair per year for every extra $1000 of median income in the community area (divided total pothole requests by 6.5 years to account for the data time range available).
+
+4. Median income of community area and average number of potholes found on the block.  Negative linear relationship with r-value of -0.43 and p-value of 8.3e-5.  Slope of regression line shows that 0.06 fewer potholes are found per block for every extra $1000 of median income in the community area.
+
+5. Percent of community area land zoned as residential and total pothole repair requests.  Positive linear relationship with r-value of 0.41 and p-value of 0.0002.  Slope of regression line indicates that for every extra percentage point of land zoned as residential, 17.6 more requests are submitted for pothole repair per year.
+
+6. Percent of community area land zoned as commercial and average number of potholes found.  Negative linear relationship with r-value of -0.44 and p-value of 5.48e-5.  Slope indicates that every extra percentage point of land zoned as commericial, 0.3 fewer potholes are found.
+
+7. Average number of potholes found and response time by community area.  Negative linear relationship with r-value of -0.43 and p-value of 0.0001.  Oddly, the negative correlation suggests the DoT finds 0.14 fewer potholes for each day they delay responding to the request.
+
+Although the distribution of response time data is approximately exponential, the Central Limit Theorem states that the means will be normally distributed and thus we can use the t-test to test the difference in means between groups.  As the variances between each sample were not equal, I performed a Welch's t-test using scipy.stat's ttest_ind method to find that the average wait time for northern community areas (36.4 days) is significantly longer than the average wait time for southern community areas (21.1 days) with a p-value of very close to zero.
+
+A Welch's t-test was performed on average wait times in the winter and summer and found a small p-value, validating the relationship that average wait times in the summer exceed average wait times in the winter.
+
+I also used the Welch's t-test to determine if wait time for pothole repairs had a larger increase in northern community areas over southern ones from winter to summer.  I found this to be the case with a p-value of 0.00125, showing that the difference in means of a wait time increase of 33.5 days for northern areas is significantly larger than the wait time increase of 27.0 days for southern areas.
+
+The last Welch's t-test I performed was to determine if there was a statistically significant difference in the number of potholes found per block between southern and northern community areas.  With a very small p-value and a negative t-statistic, I was able to confirm that southern areas have a larger number of potholes found per block on average (13.1) than northern ones (9.1).
